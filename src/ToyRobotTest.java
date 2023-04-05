@@ -12,6 +12,76 @@ public class ToyRobotTest {
     ToyRobot robot = new ToyRobot();
 
     @Test
+    public void testPlace() {
+        ToyRobot robot = new ToyRobot();
+
+        // Test placing within bounds
+        boolean result1 = robot.place(2, 3, "NORTH");
+        assertEquals(true, result1);
+        assertEquals("2,3,NORTH", robot.report());
+
+        // Test placing off the table
+        boolean result2 = robot.place(5, 1, "WEST");
+        assertEquals(false, result2);
+        assertEquals("2,3,NORTH", robot.report());
+    }
+
+    @Test
+    public void testMove() {
+        ToyRobot robot = new ToyRobot();
+
+        // Test moving within bounds
+        robot.place(1, 2, "EAST");
+        robot.move();
+        assertEquals("2,2,EAST", robot.report());
+
+        // Test moving off the edge
+        robot.place(4, 0, "NORTH");
+        robot.move();
+        assertEquals("4,1,NORTH", robot.report());
+        robot.move();
+        assertEquals("4,2,NORTH", robot.report());
+        robot.move();
+        assertEquals("4,3,NORTH", robot.report());
+        robot.move();
+        assertEquals("4,4,NORTH", robot.report());
+        robot.move();
+        assertEquals("4,4,NORTH", robot.report());
+    }
+
+    @Test
+    public void testLeft() {
+        ToyRobot robot = new ToyRobot();
+
+        // Test turning left from different directions
+        robot.place(2, 2, "NORTH");
+        robot.left();
+        assertEquals("2,2,WEST", robot.report());
+        robot.left();
+        assertEquals("2,2,SOUTH", robot.report());
+        robot.left();
+        assertEquals("2,2,EAST", robot.report());
+        robot.left();
+        assertEquals("2,2,NORTH", robot.report());
+    }
+
+    @Test
+    public void testRight() {
+        ToyRobot robot = new ToyRobot();
+
+        // Test turning right from different directions
+        robot.place(2, 2, "WEST");
+        robot.right();
+        assertEquals("2,2,NORTH", robot.report());
+        robot.right();
+        assertEquals("2,2,EAST", robot.report());
+        robot.right();
+        assertEquals("2,2,SOUTH", robot.report());
+        robot.right();
+        assertEquals("2,2,WEST", robot.report());
+    }
+
+    @Test
     public void testMoveNorthEdge() {
         robot.place(0, 4, NORTH);
         robot.move();
